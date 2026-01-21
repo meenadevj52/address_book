@@ -83,3 +83,134 @@ An address book application where API users can create, update and delete addres
    - For small datasets (SQLite), this works fine, but it **loads all addresses into memory**.  
    - For production or larger datasets, a **spatial database** like **PostGIS (PostgreSQL)** or **Spatialite (SQLite extension)** can be used to store coordinates as spatial types and perform radius queries **directly in the database**, which is faster and more scalable.  
    
+
+## Testing
+Here are the payload and responses for the APIs:
+
+1. Create Address
+
+   Endpoint: POST /addresses/
+
+   Payload:
+```bash
+{
+  "name": "Connaught Place",
+  "street": "Rajiv Chowk",
+  "city": "New Delhi",
+  "postal_code": "110001",
+  "country": "India"
+}
+```
+   Response:
+   ```bash
+   {
+  "id": "<uuid>",
+  "name": "Connaught Place",
+  "street": "Rajiv Chowk",
+  "city": "New Delhi",
+  "postal_code": "110001",
+  "country": "India",
+  "latitude": 28.6321,
+  "longitude": 77.2195,
+  "created_at": "2026-01-21T10:15:30.123456",
+  "updated_at": "2026-01-21T10:15:30.123456"
+}
+```
+2. Get Address by ID
+
+   Endpoint: POST /addresses/
+
+   Payload: <uuid>
+
+   Response:
+```bash
+{
+  "id": "<uuid>",
+  "name": "Connaught Place",
+  "street": "Rajiv Chowk",
+  "city": "New Delhi",
+  "postal_code": "110001",
+  "country": "India",
+  "latitude": 28.6321,
+  "longitude": 77.2195,
+  "created_at": "2026-01-21T10:15:30.123456",
+  "updated_at": "2026-01-21T10:15:30.123456"
+}
+```
+
+3. Update Address
+
+   Endpoint: PUT /addresses/
+
+   Payload:
+```bash
+{
+  "name": "Connaught Place",
+  "street": "Rajiv Chowk",
+  "city": "New Delhi",
+  "postal_code": "110001",
+  "country": "USA"
+}
+```
+   Response:
+   ```bash
+   {
+  "id": "c0a80123-4567-89ab-cdef-0123456789ab",
+  "name": "Connaught Place",
+  "street": "Rajiv Chowk",
+  "city": "New Delhi",
+  "postal_code": "110001",
+  "country": "USA",
+  "latitude": 28.6321,
+  "longitude": 77.2195,
+  "created_at": "2026-01-21T10:15:30.123456",
+  "updated_at": "2026-01-21T10:15:30.123456"
+}
+```
+4. Delete Address
+
+   Endpoint: DELETE /addresses/
+
+   Payload: <uuid>
+
+   Response:
+```bash
+{
+  response_status: 204
+}
+```
+
+5. Address Search
+
+   Endpoint: GET /addresses/
+
+   Payload:
+```bash
+{
+  lat: 28.6321
+  lon: 77.2195
+  radius_km: 5
+
+  OR
+
+  address: Connaught Place, Rajiv Chowk, New Delhi
+}
+
+```
+   Response:
+   ```bash
+   [
+  {
+    "id": "c0a80123-4567-89ab-cdef-0123456789ab",
+    "name": "Connaught Place",
+    "street": "Rajiv Chowk",
+    "city": "New Delhi",
+    "postal_code": "110001",
+    "country": "India",
+    "latitude": 28.6321,
+    "longitude": 77.2195,
+    "created_at": "2026-01-21T10:15:30.123456",
+    "updated_at": "2026-01-21T10:15:30.123456"
+  }
+]
+```
