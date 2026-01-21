@@ -58,6 +58,11 @@ An address book application where API users can create, update and delete addres
     cd address_book
     ```
 
+2. Install uv
+   ```
+   pip install uv
+   ```
+
 2. Install project dependencies  
    ```bash
    uv sync
@@ -65,7 +70,7 @@ An address book application where API users can create, update and delete addres
 
 3. Run the API
    ```bash
-   uvicorn src.main:app --reload
+   uv run uvicorn src.main:app --reload
    ```
 
 4. Optional: Add GOOGLE_API_KEY if integrating Google API in production.
